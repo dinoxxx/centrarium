@@ -13,8 +13,7 @@ title: 技术的征途是星辰大海
 subtitle: "PHP NGINX MYSQL REDIS"
 email: dino_liuyu@163.com
 name: Yu Liu
-description: >
-dinoxxx的技术博客，欢迎大家一起交流，共同进步
+description: dinoxxx的技术博客，欢迎大家一起交流，共同进步
 # Base URL of site (i.e. /blog). It should always start with a slash,
 # and never end with a slash. Set it to a blank value if hosting at the
 # root of your server.
