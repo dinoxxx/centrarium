@@ -117,7 +117,7 @@ extension = hello.so
 
 写一个test.php方法，执行脚本就可以看到"Hello World!"
 
-{% highlight php %}
+```
 <?php
 hello_world();
-{% endhighlight %}
+```
