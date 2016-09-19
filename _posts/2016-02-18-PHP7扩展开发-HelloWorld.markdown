@@ -6,6 +6,7 @@ author: 刘宇
 categories: PHP
 tags:	php
 ---
+
 # PHP7 Extension - Hello World
 ##一、下载PHP源代码
 要开发PHP扩展，需要先下载PHP的源代码，一方面是因为我们的扩展一般会用到PHP自身定义的函数和宏，另一方面我们可以利用官方提供的工具减少工作量。
