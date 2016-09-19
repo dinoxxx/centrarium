@@ -14,14 +14,16 @@ tags:	php
 zval结构体是Zend内核的非常核心的结构，在PHP5和PHP7之间的差别非常大，我给出2处文章供大家学习，基本上可以代表这块知识点最权威的介绍了。
 
 *深入理解PHP7之zval（鸟哥）*
+
 https://github.com/laruence/php7-internal/blob/master/zval.md
 
 *变量在 PHP7 内部的实现（Nikita Popov）中文版*
+
 http://0x1.im/blog/php/Internal-value-representation-in-PHP-7-part-1.html
 http://0x1.im/blog/php/Internal-value-representation-in-PHP-7-part-2.html
 
-PHP7不再使用zval的二级指针，大多数场景下出现的zval**变量都改成zval*，相应的使用在这些变量上的宏Z_*_PP也需要改成Z_*_P。
-在大部分场景下，PHP7是在栈上直接使用zval，不需要去堆上分配内存。这时，zval *就需要改成zval，宏也需要从Z_*_P改成Z_*，创建宏从ZVAL_*(var)转换成ZVAL_*(&var)。所以，分配zval内存的宏
+PHP7不再使用zval的二级指针，大多数场景下出现的zval\*\* 变量都改成zval\*，相应的使用在这些变量上的宏Z_\*_PP也需要改成Z_\*_P。
+在大部分场景下，PHP7是在栈上直接使用zval，不需要去堆上分配内存。这时，zval \*就需要改成zval，宏也需要从Z_\*_P改成Z_\*，创建宏从ZVAL_\*(var)转换成ZVAL_\*(&var)。所以，分配zval内存的宏
 
 ```
 ALLOC_ZVAL、ALLOC_INIT_ZVAL、MAKE_STD_ZVAL都被删掉了。
@@ -62,7 +64,7 @@ struct _zend_string {
 };
 ```
 
-gc是PHP7中的所有非标量结构都包含的垃圾回收结构体变量；h是字符串哈希值，作为HashTable的key时不需要每次都重新计算哈希值，提高了效率；len是字符串长度，同理每次使用到字符串的长度时不需要再计算，提高了效率；val[1]是C语言的黑科技，此处按照char *理解即可。这里有三个宏帮助我们方便的使用zend_string的变量。
+gc是PHP7中的所有非标量结构都包含的垃圾回收结构体变量；h是字符串哈希值，作为HashTable的key时不需要每次都重新计算哈希值，提高了效率；len是字符串长度，同理每次使用到字符串的长度时不需要再计算，提高了效率；val[1]是C语言的黑科技，此处按照char \*理解即可。这里有三个宏帮助我们方便的使用zend_string的变量。
 
 ```
 #define ZSTR_VAL(zstr)  (zstr)->val
