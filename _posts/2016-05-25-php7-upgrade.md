@@ -20,10 +20,11 @@ https://github.com/laruence/php7-internal/blob/master/zval.md
 *变量在 PHP7 内部的实现（Nikita Popov）中文版*
 
 http://0x1.im/blog/php/Internal-value-representation-in-PHP-7-part-1.html
+
 http://0x1.im/blog/php/Internal-value-representation-in-PHP-7-part-2.html
 
-PHP7不再使用zval的二级指针，大多数场景下出现的zval\*\* 变量都改成zval\*，相应的使用在这些变量上的宏Z_\*_PP也需要改成Z_\*_P。
-在大部分场景下，PHP7是在栈上直接使用zval，不需要去堆上分配内存。这时，zval \*就需要改成zval，宏也需要从Z_\*_P改成Z_\*，创建宏从ZVAL_\*(var)转换成ZVAL_\*(&var)。所以，分配zval内存的宏
+PHP7不再使用zval的二级指针，大多数场景下出现的zval\*\* 变量都改成zval\*，相应的使用在这些变量上的宏Z_\*\_PP也需要改成Z_\*\_P。
+在大部分场景下，PHP7是在栈上直接使用zval，不需要去堆上分配内存。这时，zval \*就需要改成zval，宏也需要从Z_\*\_P改成Z\_\*，创建宏从ZVAL\_\*(var)转换成ZVAL\_\*(&var)。所以，分配zval内存的宏
 
 ```
 ALLOC_ZVAL、ALLOC_INIT_ZVAL、MAKE_STD_ZVAL都被删掉了。
