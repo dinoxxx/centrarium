@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "PHP造日志轮子的经验"
+title:  "opcache的检测文件更新的小坑"
 date:   2016-04-20
 author: 刘宇
 categories: PHP
