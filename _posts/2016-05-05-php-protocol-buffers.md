@@ -7,7 +7,7 @@ categories: PHP
 tags:	php
 ---
 
-我们知道Protocol Buffers是Google定义的一种跨语言、跨平台、可扩展的数据传输及存储的协议，因为将字段协议分别放在传输两端，传输数据中只包含数据本身，不需要包含字段说明，所以传输数据量小，解析效率高。感兴趣的可以访问https://developers.google.com/protocol-buffers/docs/overview。Protocol Buffers官方只支持C++, Java, Python, C#, Go，如果想在PHP中使用Protocol Buffers，需要借助于第三方的扩展，使用方法如下。
+我们知道Protocol Buffers是Google定义的一种跨语言、跨平台、可扩展的数据传输及存储的协议，因为将字段协议分别放在传输两端，传输数据中只包含数据本身，不需要包含字段说明，所以传输数据量小，解析效率高。感兴趣的可以访问https://developers.google.com/protocol-buffers/docs/overview。Protocol Buffers官方只支持C++, Java, Python, C#, Go，如果想在PHP中使用Protocol Buffers，需要借助于第三方的扩展，使用方法如下。<!-- more -->
 
 ## 安装protoc编译器
 
