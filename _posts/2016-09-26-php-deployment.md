@@ -48,13 +48,16 @@ PHP的运行过程大致分为，第一步**解析**成有意义的语言片段�
 当我们访问一个PHP文件时，会通过**stat()**系统调用解析它的路径、链接和文件信息，最后会将realpath缓存起来，方便下次访问。在PHP的默认配置下，这个缓存每隔120秒更新一次。
 
 如果采用软链接的发布方式，由于上述2种缓存的更新不及时，还是会导致非原子的发布过程。为了解决这个问题，在Nginx的配置中，需要按照如下方式修改。
+
 ```
 fastcgi_param  SCRIPT_FILENAME	$realpath_root$fastcgi_script_name;
 fastcgi_param  DOCUMENT_ROOT	$realpath_root;
 ```
+
 按照以上方式配置之后，Nginx传递给PHP的已经是将软链接转换成realpath之后的值，对于PHP来说，每次发布后都会按照新的realpath来更新缓存。
  
 切换软链接的**ln -sfn**命令可以真正做到原子操作吗？有点不放心，还是用**strace**来监控一下看看。
+
 ```
 $mkdir a b && ln -sfn a target
 $strace ln -sfn b target
@@ -62,12 +65,15 @@ symlink("b", "target")                  = -1 EEXIST (File exists)
 unlink("target")                        = 0
 symlink("b", "target")                  = 0 
 ```
+
  果然，直接执行**ln -sfn**命令来做软链接的切换不能保证原子操作，必须经过解除链接后才能建立链接。
+ 
 ```
 $ln -sfn b target-tmp
 $strace mv target-tmp target
 rename("target-tmp", "target/target-tmp") = 0
 ```
+
 先建立一个临时软链接，然后执行**mv**命令，只有重命名一个步骤，真正实现了原子操作。这也是我们优化后的最终发布脚本。
  
 ## 容器化发布
