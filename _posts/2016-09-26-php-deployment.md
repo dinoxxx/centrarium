@@ -58,7 +58,6 @@ fastcgi_param  DOCUMENT_ROOT	$realpath_root;
 ```
 $mkdir a b && ln -sfn a target
 $strace ln -sfn b target
-
 symlink("b", "target")                  = -1 EEXIST (File exists)
 unlink("target")                        = 0
 symlink("b", "target")                  = 0 
@@ -67,7 +66,6 @@ symlink("b", "target")                  = 0
 ```
 $ln -sfn b target-tmp
 $strace mv target-tmp target
-
 rename("target-tmp", "target/target-tmp") = 0
 ```
 先建立一个临时软链接，然后执行**mv**命令，只有重命名一个步骤，真正实现了原子操作。这也是我们优化后的最终发布脚本。
