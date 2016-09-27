@@ -50,7 +50,7 @@ tags:	php
 
 * **opcode cache**
 
-PHP的运行过程大致分为，第一步**解析**成有意义的语言片段，第二步**编译**成opcode，第三步**执行**opcode输出结果。为了提高PHP的性能，可以将第二步的opcode缓存起来，按照php.ini中的opcache配置来更新。关键的一点，opcache的缓存键是文件的realpath。
+PHP的运行过程大致分为，第一步**解析**成简答而有意义的表达式，第二步**编译**成opcode，第三步**执行**opcode输出结果。为了提高PHP的性能，可以将第二步的opcode缓存起来，按照php.ini中的opcache配置来更新。关键的一点，opcache的缓存键是文件的realpath。
 
 * **realpath cache**
 
