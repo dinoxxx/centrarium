@@ -83,7 +83,7 @@ https://wiki.php.net/rfc/abstract_syntax_tree。
 我们的PHP代码会被编译成下面这个样子，最后的执行阶段就是一行一行的执行这些机器码。
 
 ```
-ZEND_ECHO		string:Hello World	unused	unused
+ZEND_ECHO		string:Hello World	  unused	unused
 ZEND_ASSIGN		CV+96				long:2  unknown
 ZEND_ECHO		CV+96				unused  unused
 ZEND_RETURN		long:1				unused  unused
@@ -99,11 +99,11 @@ https://github.com/ZaneXie/php7-opdump
 
 Opcode的操作类型，定义在*Zend/zend_vm_opcodes.h*中，数量较多，不在这里列举了。数据类型定义在*Zend/zend_compile.h*中
 
-```C
-#define IS_CONST    	(1<<0)
-#define IS_TMP_VAR  	(1<<1)
-#define IS_VAR      	(1<<2)
-#define IS_UNUSED   	(1<<3)  /* Unused variable */
-#define IS_CV       	(1<<4)  /* Compiled variable */
+```
+#define IS_CONST    	  (1<<0)
+#define IS_TMP_VAR  	  (1<<1)
+#define IS_VAR      	  (1<<2)
+#define IS_UNUSED   	  (1<<3)  /* Unused variable */
+#define IS_CV       	  (1<<4)  /* Compiled variable */
 #define EXT_TYPE_UNUSED (1<<5)
 ```
