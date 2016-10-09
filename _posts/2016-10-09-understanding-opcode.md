@@ -8,7 +8,7 @@ tags:	php
 ---
  
 本文基于Sara Golemon的Understanding OPcode一文翻译，由于原文写于2008年，很多细节已经发生了较大改变，所以本文基于PHP7进行了改编。
-Sara Golemon是一位值得介绍的作者，国内稍微对PHP内核有点研究的程序员，应该都看过@WALU写的《PHP扩展开发及内核应用》，而这本电子书大体上是翻译的Sara Golemon在2005年著作的《Extending and Embedding PHP》，而且这位作者还是一位程序媛。
+Sara Golemon是一位值得介绍的作者，国内稍微对PHP内核有点研究的程序员，应该都看过@WALU写的《PHP扩展开发及内核应用》，而这本电子书大体上是翻译的Sara Golemon在2005年著作的《Extending and Embedding PHP》，而且这位作者还是一位程序媛。<!-- more -->
  
 ## What is Opcode
 简而言之，它是PHP脚本的编译阶段的中间产物，类似于Java的字节码（bytecode），或者.NET的微软中间语言（MSIL）。举个例子，执行以下PHP代码。
@@ -25,7 +25,7 @@ PHP的Zend内核引擎会经历以下几个步骤
 1. **Lexing**：将PHP脚本拆分为语法片段
 2. **Parsing**：将语法片段整理为简短而有意义的表达式
 3. **Compilation**：将表达式转换为机器指令，也就是本文标题中的Opcode
-4. **Execution**：一次一行的执行Opcode，完成PHP脚本的任务<!-- more -->
+4. **Execution**：一次一行的执行Opcode，完成PHP脚本的任务
 
 备注：Opcode缓存（Opcache, APC等）可以提升PHP脚本执行的效率，首次执行时经历前面3个步骤，并且把编译生成的Opcode缓存起来，再次执行时只需要经历最后1个步骤。
 
@@ -83,10 +83,10 @@ https://wiki.php.net/rfc/abstract_syntax_tree。
 我们的PHP代码会被编译成下面这个样子，最后的执行阶段就是一行一行的执行这些机器码。
 
 ```
-ZEND_ECHO   string:Hello World  unused	unused
-ZEND_ASSIGN CV+96				        long:2  unknown
-ZEND_ECHO   CV+96				        unused  unused
-ZEND_RETURN long:1				      unused  unused
+ZEND_ECHO string:Hello World unused unused
+ZEND_ASSIGN CV+96 long:2 unknown
+ZEND_ECHO CV+96 unused unused
+ZEND_RETURN long:1 unused unused
 ```
 
 \$a已经看不到了，可以简单理解为CV+96就是\$a，其中CV表示编译变量，+96表示偏移量；long：2说明1 + 1的操作已经优化掉了。
