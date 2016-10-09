@@ -8,7 +8,7 @@ tags:	php
 ---
  
 本文基于Sara Golemon的Understanding OPcode一文翻译，由于原文写于2008年，很多细节已经发生了较大改变，所以本文基于PHP7进行了改编。
-Sara Golemon是一位值得介绍的作者，国内稍微对PHP内核有点研究的程序员，应该都看过@WALU写的《PHP扩展开发及内核应用》，而这本电子书大体上是翻译的Sara Golemon在2005年著作的《Extending and Embedding PHP》，而且这位作者还是一位程序媛。<!--more-->
+Sara Golemon是一位值得介绍的作者，国内稍微对PHP内核有点研究的程序员，应该都看过@WALU写的《PHP扩展开发及内核应用》，而这本电子书大体上是翻译的Sara Golemon在2005年著作的《Extending and Embedding PHP》，而且这位作者还是一位程序媛。<!-- more -->
  
 ## What is Opcode
 简而言之，它是PHP脚本的编译阶段的中间产物，类似于Java的字节码（bytecode），或者.NET的微软中间语言（MSIL）。举个例子，执行以下PHP代码。
@@ -21,6 +21,7 @@ echo $a;
 ```
 
 PHP的Zend内核引擎会经历以下几个步骤
+
 1. **Lexing**：将PHP脚本拆分为语法片段
 2. **Parsing**：将语法片段整理为简短而有意义的表达式
 3. **Compilation**：将表达式转换为机器指令，也就是本文标题中的Opcode
@@ -61,35 +62,43 @@ array(21) {
 
 ## How to Parse
 语法分析先要做的事是去除多余的空格，在剩下的Token集合中，Zend内核引擎查找最基本的表达式。前面的代码片段有3个*statement*，其中1个*statement*可以分割成2个*expression*，$a = 1 + 1，先处理相加，然后处理赋值。全部*expression*列表如下。
+
 1. 打印一个常量字符串
 2. 对两个数字相加
 3. 将结果赋值给一个变量
 4. 打印这个变量
 
-PHP7新增了一个抽象语法树AST的东西，语法分析的输出变成了AST。AST具体是什么，有什么好处，读者可以继续深入学习，https://wiki.php.net/rfc/abstract_syntax_tree。
+PHP7新增了一个抽象语法树AST的东西，语法分析的输出变成了AST。AST具体是什么，有什么好处，读者可以继续深入学习
+
+https://wiki.php.net/rfc/abstract_syntax_tree。
 
 ## How to Compile
 然后就改Compile阶段了，它会把AST编译成一个个op_array, 每个op_array包含如下4个部分：
+
 1. Opcode操作类型，比如ECHO，ASSIGN
 2. 结果
 3. 操作数一
 4. 操作数二
 
 我们的PHP代码会被编译成下面这个样子，最后的执行阶段就是一行一行的执行这些机器码。
+
 ```
 ZEND_ECHO		string:Hello World	unused	unused
 ZEND_ASSIGN		CV+96				long:2  unknown
 ZEND_ECHO		CV+96				unused  unused
 ZEND_RETURN		long:1				unused  unused
 ```
+
 \$a已经看不到了，可以简单理解为CV+96就是\$a，其中CV表示编译变量，+96表示偏移量；long：2说明1 + 1的操作已经优化掉了。
 
 备注：由上述优化引申一点，平时写代码时定义的常量，比如1天的时间，不用写86400这种魔术数字了，完全可以写成60 \* 60 \* 24，可读性比较高，也不会额外牺牲性能。
 
 另外，再介绍一个PHP7的opcode查看器
+
 https://github.com/ZaneXie/php7-opdump
 
 Opcode的操作类型，定义在*Zend/zend_vm_opcodes.h*中，数量较多，不在这里列举了。数据类型定义在*Zend/zend_compile.h*中
+
 ```C
 #define IS_CONST    	(1<<0)
 #define IS_TMP_VAR  	(1<<1)
